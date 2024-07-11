@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizapp_estrutura_inicial/perguntas.dart';
 
 void main() => runApp(QuizApp());
 
@@ -27,13 +28,11 @@ class _QuizPageState extends State<QuizPage> {
   List<Icon> marcadorDePontos = [
   ];
 
-  List<String> perguntas = [
-    'O metrô é um dos meios de transporte mais seguros do mundo',
-    'A culinária brasileira é uma das melhores do mundo.', 
-    'Vacas podem voar, assim como peixes utilizam os pés para andar.'
+  List<Perguntas> bancoDePerguntas = [
+    Perguntas('O metrô é um dos meios de transporte mais seguros do mundo.', true),
+    Perguntas('A culinária brasileira é uma das melhores do mundo.', true),
+    Perguntas('Vacas podem voar, assim como peixes utilizam os pés para andar.', false)
   ];
-
-  List<bool> statusPerguntas = [true, true, false];
 
   int questaoAtual = 0;
 
@@ -49,7 +48,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                perguntas[questaoAtual],
+                bancoDePerguntas[questaoAtual].questao,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -75,7 +74,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //O usuário clica no botão verdadeiro.
 
-                bool respCerta = statusPerguntas[questaoAtual];
+                bool respCerta = bancoDePerguntas[questaoAtual].resposta;
 
                 if(respCerta == true) {
                   print("Usuário acertou!");
@@ -107,7 +106,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //O usuário clica no botão falso.
 
-                bool respErrada = statusPerguntas[questaoAtual];
+                bool respErrada = bancoDePerguntas[questaoAtual].resposta;
 
                 if(respErrada == false) {
                   print("Usuário acertou!");
