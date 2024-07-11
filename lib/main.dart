@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizapp_estrutura_inicial/perguntas.dart';
+import 'package:quizapp_estrutura_inicial/helper.dart';
 
 void main() => runApp(QuizApp());
 
@@ -28,13 +28,7 @@ class _QuizPageState extends State<QuizPage> {
   List<Icon> marcadorDePontos = [
   ];
 
-  List<Perguntas> bancoDePerguntas = [
-    Perguntas('O metrô é um dos meios de transporte mais seguros do mundo.', true),
-    Perguntas('A culinária brasileira é uma das melhores do mundo.', true),
-    Perguntas('Vacas podem voar, assim como peixes utilizam os pés para andar.', false)
-  ];
-
-  int questaoAtual = 0;
+  Helper helper = Helper();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +42,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                bancoDePerguntas[questaoAtual].questao,
+                helper.getQuestaoByNumAtual(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -74,7 +68,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //O usuário clica no botão verdadeiro.
 
-                bool respCerta = bancoDePerguntas[questaoAtual].resposta;
+                bool respCerta = helper.getRespostaCorreta();
 
                 if(respCerta == true) {
                   print("Usuário acertou!");
@@ -83,7 +77,7 @@ class _QuizPageState extends State<QuizPage> {
                 }
 
                 setState(() {
-                  questaoAtual++;
+                  helper.proxQuestao();
                 }); 
               },
             ),
@@ -106,7 +100,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 //O usuário clica no botão falso.
 
-                bool respErrada = bancoDePerguntas[questaoAtual].resposta;
+                bool respErrada = helper.getRespostaCorreta();
 
                 if(respErrada == false) {
                   print("Usuário acertou!");
@@ -115,7 +109,7 @@ class _QuizPageState extends State<QuizPage> {
                 }
 
                 setState(() {
-                  questaoAtual++;
+                  helper.proxQuestao();
                 });
               },
             ),
@@ -128,5 +122,3 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
-
-
