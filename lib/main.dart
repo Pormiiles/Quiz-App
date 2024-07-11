@@ -25,11 +25,17 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> marcadorDePontos = [
-    Icon(Icons.check, color: Colors.green),
-    Icon(Icons.close, color: Colors.red),
-    Icon(Icons.check, color: Colors.green),
-    Icon(Icons.close, color: Colors.red)
   ];
+
+  List<String> perguntas = [
+    'O metrô é um dos meios de transporte mais seguros do mundo',
+    'A culinária brasileira é uma das melhores do mundo.', 
+    'Vacas podem voar, assim como peixes utilizam os pés para andar.'
+  ];
+
+  List<bool> statusPerguntas = [true, true, false];
+
+  int questaoAtual = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'As perguntas serão exibidas aqui.',
+                perguntas[questaoAtual],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -68,9 +74,18 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //O usuário clica no botão verdadeiro.
+
+                bool respCerta = statusPerguntas[questaoAtual];
+
+                if(respCerta == true) {
+                  print("Usuário acertou!");
+                } else {
+                  print("Usuário errou!");
+                }
+
                 setState(() {
-                  marcadorDePontos.add(Icon(Icons.check, color: Colors.green));
-                });  
+                  questaoAtual++;
+                }); 
               },
             ),
           ),
@@ -91,6 +106,18 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //O usuário clica no botão falso.
+
+                bool respErrada = statusPerguntas[questaoAtual];
+
+                if(respErrada == false) {
+                  print("Usuário acertou!");
+                } else {
+                  print("Usuário errou!");
+                }
+
+                setState(() {
+                  questaoAtual++;
+                });
               },
             ),
           ),
@@ -103,8 +130,4 @@ class _QuizPageState extends State<QuizPage> {
   }
 }
 
-/*
-pergunta1: 'O metrô é um dos meios de transporte mais seguros do mundo', verdadeiro,
-pergunta2: 'A culinária brasileira é uma das melhores do mundo.', verdadeiro,
-pergunta3: 'Vacas podem voar, assim como peixes utilizam os pés para andar.', falso,
-*/
+
