@@ -26,9 +26,25 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> marcadorDePontos = [
+    Icon(Icons.check, color: Colors.green),
+    Icon(Icons.close, color: Colors.red),
   ];
 
   Helper helper = Helper();
+
+  void conferirResposta(bool respostaDoUser) {
+      bool respCerta = helper.getRespostaCorreta();
+
+      setState(() {
+        helper.proxQuestao();
+      }); 
+
+      if(respCerta == true) {
+        marcadorDePontos.add(Icon(Icons.check, color: Colors.green));
+      } else {
+        marcadorDePontos.add(Icon(Icons.close, color: Colors.red));
+      }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,18 +83,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //O usuário clica no botão verdadeiro.
-
-                bool respCerta = helper.getRespostaCorreta();
-
-                if(respCerta == true) {
-                  print("Usuário acertou!");
-                } else {
-                  print("Usuário errou!");
-                }
-
-                setState(() {
-                  helper.proxQuestao();
-                }); 
+                conferirResposta(true);
               },
             ),
           ),
@@ -99,18 +104,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //O usuário clica no botão falso.
-
-                bool respErrada = helper.getRespostaCorreta();
-
-                if(respErrada == false) {
-                  print("Usuário acertou!");
-                } else {
-                  print("Usuário errou!");
-                }
-
-                setState(() {
-                  helper.proxQuestao();
-                });
+                conferirResposta(false);
               },
             ),
           ),
