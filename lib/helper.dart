@@ -19,10 +19,15 @@ class Helper {
     Perguntas('O cartão de crédito pode ser considerado uma moeda virtual.', false)
   ];
 
-  void proxQuestao() {
+  bool proxQuestao() {
     if(_questaoAtual < _bancoDePerguntas.length - 1) {
       _questaoAtual++;
+
+      return true;
     } 
+
+    _questaoAtual = 0;
+    return false;
   }
 
   String getQuestaoByNumAtual() {

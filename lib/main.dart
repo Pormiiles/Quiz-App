@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizapp_estrutura_inicial/helper.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(QuizApp());
 
@@ -26,8 +27,6 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> marcadorDePontos = [
-    Icon(Icons.check, color: Colors.green),
-    Icon(Icons.close, color: Colors.red),
   ];
 
   Helper helper = Helper();
@@ -36,14 +35,35 @@ class _QuizPageState extends State<QuizPage> {
       bool respCerta = helper.getRespostaCorreta();
 
       setState(() {
-        helper.proxQuestao();
+        if(respCerta == respostaDoUser) {
+          marcadorDePontos.add(Icon(Icons.check, color: Colors.green));
+        } else {
+          marcadorDePontos.add(Icon(Icons.close, color: Colors.red));
+        }
       }); 
 
-      if(respCerta == true) {
-        marcadorDePontos.add(Icon(Icons.check, color: Colors.green));
-      } else {
-        marcadorDePontos.add(Icon(Icons.close, color: Colors.red));
-      }
+      bool nextQuestion = helper.proxQuestao();
+
+      if(!nextQuestion) {
+        marcadorDePontos = [];
+
+        Alert(
+          context: context,
+          type: AlertType.error,
+          title: "QUIZ FINALIZADO!",
+          desc: "Parabéns! Você chegou ao final do quiz.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "REINICIAR",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            )
+          ],
+        ).show();
+      } 
   }
 
   @override
